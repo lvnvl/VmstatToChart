@@ -58,7 +58,11 @@ public class ToChart {
 					.addIntegerSeries("cpu", logData.get("cpu").size(), logData.get("cpu"))
 					.build();
 				new MyXChartBuilder(logPath, "虚拟内存占用", "使用（MB）")
-				.addIntegerSeries("swpd", logData.get("swpd").size(), logData.get("swpd"))
+				.addIntegerSeries("swpd", logData.get("swpd").size(), 
+						logData.get("swpd").stream()
+						.map(swpd -> Float.valueOf(swpd).floatValue()/1000.0)
+						.map(swpdFloat -> String.valueOf(swpdFloat))
+						.collect(Collectors.toList()))
 				.build();
 			
 			}
